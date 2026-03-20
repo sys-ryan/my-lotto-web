@@ -1,65 +1,85 @@
-import Image from "next/image";
+'use client';
+
+import Link from 'next/link';
+import { useGetWinningNumberInfoQuery } from '@/hooks/queries/useGetWinningNumberInfoQuery';
+import LottoNumbers from '@/components/LottoNumbers';
 
 export default function Home() {
+  const { data, isLoading } = useGetWinningNumberInfoQuery();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-8">
+      {/* Hero */}
+      <section className="text-center py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">MyLotto</h1>
+        <p className="text-gray-500">로또 당첨번호 확인 & 번호 생성</p>
+      </section>
+
+      {/* Latest winning numbers */}
+      <section className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-gray-900">최신 당첨번호</h2>
+          <Link href="/winning-numbers" className="text-sm text-blue-600 hover:text-blue-700">
+            더보기 →
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        {isLoading ? (
+          <div className="animate-pulse flex gap-2">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div key={i} className="w-10 h-10 bg-gray-200 rounded-full" />
+            ))}
+          </div>
+        ) : data?.data ? (
+          <div>
+            <p className="text-sm text-gray-500 mb-3">
+              제 {data.data.round}회 ({data.data.id})
+            </p>
+            <LottoNumbers
+              numbers={data.data.winningNumbers}
+              bonusNumber={data.data.bonusNumber}
+              size="lg"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+          </div>
+        ) : (
+          <p className="text-gray-400">데이터를 불러올 수 없습니다</p>
+        )}
+      </section>
+
+      {/* Quick actions */}
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Link
+          href="/generate/random"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <div className="text-2xl mb-2">🎲</div>
+          <div className="font-medium text-gray-900">랜덤 생성</div>
+          <div className="text-xs text-gray-500 mt-1">행운의 번호 뽑기</div>
+        </Link>
+        <Link
+          href="/generate/appearance"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <div className="text-2xl mb-2">📊</div>
+          <div className="font-medium text-gray-900">출현 빈도</div>
+          <div className="text-xs text-gray-500 mt-1">통계 기반 생성</div>
+        </Link>
+        <Link
+          href="/winning-numbers/check"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <div className="text-2xl mb-2">🏆</div>
+          <div className="font-medium text-gray-900">당첨 확인</div>
+          <div className="text-xs text-gray-500 mt-1">내 번호 확인하기</div>
+        </Link>
+        <Link
+          href="/my-numbers"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <div className="text-2xl mb-2">⭐</div>
+          <div className="font-medium text-gray-900">내 번호</div>
+          <div className="text-xs text-gray-500 mt-1">저장된 번호 관리</div>
+        </Link>
+      </section>
     </div>
   );
 }
