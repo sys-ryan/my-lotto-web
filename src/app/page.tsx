@@ -23,26 +23,31 @@ export default function Home() {
             더보기 →
           </Link>
         </div>
-        {isLoading ? (
-          <div className="animate-pulse flex gap-2">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <div key={i} className="w-10 h-10 bg-gray-200 rounded-full" />
-            ))}
-          </div>
-        ) : data?.data ? (
-          <div>
-            <p className="text-sm text-gray-500 mb-3">
-              제 {data.data.round}회 ({data.data.id})
-            </p>
-            <LottoNumbers
-              numbers={data.data.winningNumbers}
-              bonusNumber={data.data.bonusNumber}
-              size="lg"
-            />
-          </div>
-        ) : (
-          <p className="text-gray-500">데이터를 불러올 수 없습니다</p>
-        )}
+        <div className="min-h-[80px]">
+          {isLoading ? (
+            <div className="animate-pulse">
+              <div className="h-5 bg-gray-200 rounded w-40 mb-3" />
+              <div className="flex gap-1.5">
+                {Array.from({ length: 7 }).map((_, i) => (
+                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full" />
+                ))}
+              </div>
+            </div>
+          ) : data?.data ? (
+            <div>
+              <p className="text-sm text-gray-500 mb-3">
+                제 {data.data.round}회 ({data.data.id})
+              </p>
+              <LottoNumbers
+                numbers={data.data.winningNumbers}
+                bonusNumber={data.data.bonusNumber}
+                size="lg"
+              />
+            </div>
+          ) : (
+            <p className="text-gray-500">데이터를 불러올 수 없습니다</p>
+          )}
+        </div>
       </section>
 
       {/* Quick actions */}
