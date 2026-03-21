@@ -9,8 +9,8 @@ interface NumberBallProps {
 
 const sizeMap = {
   sm: 'w-8 h-8 text-sm',
-  md: 'w-10 h-10 text-base',
-  lg: 'w-12 h-12 text-lg',
+  md: 'w-9 h-9 text-sm md:w-10 md:h-10 md:text-base',
+  lg: 'w-10 h-10 text-base md:w-12 md:h-12 md:text-lg',
 };
 
 export default function NumberBall({ number, size = 'md' }: NumberBallProps) {

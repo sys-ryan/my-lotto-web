@@ -22,7 +22,7 @@ export default function WinningNumbersPage() {
       <div className="flex bg-white rounded-xl p-1 shadow-sm">
         <button
           onClick={() => setTab('lotto645')}
-          className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+          className={`flex-1 py-2.5 text-base font-medium rounded-lg transition-colors ${
             tab === 'lotto645'
               ? 'bg-blue-600 text-white'
               : 'text-gray-600 hover:text-gray-900'
@@ -32,7 +32,7 @@ export default function WinningNumbersPage() {
         </button>
         <button
           onClick={() => setTab('dh720')}
-          className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+          className={`flex-1 py-2.5 text-base font-medium rounded-lg transition-colors ${
             tab === 'dh720'
               ? 'bg-blue-600 text-white'
               : 'text-gray-600 hover:text-gray-900'
@@ -73,12 +73,17 @@ function Lotto645Tab({
       {/* Winning numbers card */}
       <div className="bg-white rounded-2xl shadow-sm p-6">
         <div className="text-center mb-4">
-          <h2 className="text-lg font-bold text-gray-900">제 {round}회</h2>
-          <p className="text-sm text-gray-500">{id}</p>
+          <h2 className="text-xl font-bold text-gray-900">제 {round}회</h2>
+          <p className="text-base text-gray-500">{id}</p>
         </div>
         <div className="flex justify-center">
           <LottoNumbers numbers={winningNumbers} bonusNumber={bonusNumber} size="lg" />
         </div>
+      </div>
+
+      {/* [AD PREVIEW] 당첨번호-테이블 사이 배너 */}
+      <div className="bg-purple-200 border-2 border-purple-400 border-dashed rounded-2xl p-4 text-center text-purple-700 font-medium text-sm">
+        광고 영역 - 중간 배너 (320x100)
       </div>
 
       {/* Prize table */}
@@ -87,7 +92,7 @@ function Lotto645Tab({
           <h3 className="font-bold text-gray-900">등수별 당첨 정보</h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-base">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left font-medium text-gray-600">등수</th>
@@ -132,17 +137,17 @@ function DH720Tab({
       {/* Winning numbers card */}
       <div className="bg-white rounded-2xl shadow-sm p-6">
         <div className="text-center mb-4">
-          <h2 className="text-lg font-bold text-gray-900">제 {d.round}회</h2>
-          <p className="text-sm text-gray-500">{d.drawDate}</p>
+          <h2 className="text-xl font-bold text-gray-900">제 {d.round}회</h2>
+          <p className="text-base text-gray-500">{d.drawDate}</p>
         </div>
 
         {/* 1등 */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full">
+            <span className="bg-yellow-100 text-yellow-800 text-sm font-bold px-2 py-1 rounded-full">
               1등
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-base text-gray-500">
               {d.firstPrizeGroup}조
             </span>
           </div>
@@ -151,7 +156,7 @@ function DH720Tab({
               <NumberBall key={i} number={num} size="lg" />
             ))}
           </div>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="text-base text-gray-600 mt-2">
             월 {formatKRW(d.firstPrizeAmount)} x {d.firstPrizeYears}년
           </p>
         </div>
@@ -159,7 +164,7 @@ function DH720Tab({
         {/* 보너스 */}
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">
+            <span className="bg-green-100 text-green-800 text-sm font-bold px-2 py-1 rounded-full">
               보너스
             </span>
           </div>
@@ -168,7 +173,7 @@ function DH720Tab({
               <NumberBall key={i} number={num} size="lg" />
             ))}
           </div>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="text-base text-gray-600 mt-2">
             월 {formatKRW(d.bonusAmount)} x {d.bonusYears}년
           </p>
         </div>

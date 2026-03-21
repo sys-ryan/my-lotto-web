@@ -35,7 +35,7 @@ export default function RandomGeneratePage() {
       <h1 className="text-2xl font-bold text-gray-900">랜덤 번호 생성</h1>
 
       <div className="bg-white rounded-2xl shadow-sm p-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-base font-medium text-gray-700 mb-2">
           생성 개수
         </label>
         <div className="flex items-center gap-3 mb-4">
@@ -43,7 +43,7 @@ export default function RandomGeneratePage() {
             <button
               key={n}
               onClick={() => setCount(n)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-base font-medium transition-colors ${
                 count === n
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -67,7 +67,7 @@ export default function RandomGeneratePage() {
             <h2 className="font-bold text-gray-900">생성 결과</h2>
             <button
               onClick={saveNumbers}
-              className="text-sm text-blue-600 font-medium hover:text-blue-700"
+              className="text-base text-blue-600 font-medium hover:text-blue-700"
             >
               저장하기
             </button>
@@ -75,13 +75,18 @@ export default function RandomGeneratePage() {
           <div className="space-y-3">
             {results.map((nums, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-sm text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
+                <span className="text-base text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
                 <LottoNumbers numbers={nums} />
               </div>
             ))}
           </div>
         </div>
       )}
+
+      {/* [AD PREVIEW] 번호생성 결과 하단 배너 */}
+      <div className="bg-red-200 border-2 border-red-400 border-dashed rounded-2xl p-4 text-center text-red-700 font-medium text-sm">
+        광고 영역 - 생성 결과 하단 (320x250)
+      </div>
     </div>
   );
 }

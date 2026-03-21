@@ -24,7 +24,7 @@ export default function Home() {
       <section className="bg-white rounded-2xl shadow-sm p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900">최신 당첨번호</h2>
-          <Link href="/winning-numbers" className="text-sm text-blue-600 hover:text-blue-700">
+          <Link href="/winning-numbers" className="text-base text-blue-600 hover:text-blue-700">
             더보기 →
           </Link>
         </div>
@@ -34,13 +34,13 @@ export default function Home() {
               <div className="h-5 bg-gray-200 rounded w-40 mb-3" />
               <div className="flex gap-1.5">
                 {Array.from({ length: 7 }).map((_, i) => (
-                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full" />
+                  <div key={i} className="w-10 h-10 md:w-12 md:h-12 bg-gray-200 rounded-full" />
                 ))}
               </div>
             </div>
           ) : data?.data ? (
             <div>
-              <p className="text-sm text-gray-500 mb-3">
+              <p className="text-base text-gray-500 mb-3">
                 제 {data.data.round}회 ({data.data.id})
               </p>
               <LottoNumbers
@@ -68,7 +68,7 @@ export default function Home() {
         >
           <div className="text-2xl mb-2">🎲</div>
           <div className="font-medium text-gray-900">랜덤 생성</div>
-          <div className="text-xs text-gray-500 mt-1">행운의 번호 뽑기</div>
+          <div className="text-sm text-gray-500 mt-1">행운의 번호 뽑기</div>
         </Link>
         <Link
           href="/generate/appearance"
@@ -76,7 +76,7 @@ export default function Home() {
         >
           <div className="text-2xl mb-2">📊</div>
           <div className="font-medium text-gray-900">출현 빈도</div>
-          <div className="text-xs text-gray-500 mt-1">통계 기반 생성</div>
+          <div className="text-sm text-gray-500 mt-1">통계 기반 생성</div>
         </Link>
         <Link
           href="/winning-numbers/check"
@@ -84,7 +84,7 @@ export default function Home() {
         >
           <div className="text-2xl mb-2">🏆</div>
           <div className="font-medium text-gray-900">당첨 확인</div>
-          <div className="text-xs text-gray-500 mt-1">내 번호 확인하기</div>
+          <div className="text-sm text-gray-500 mt-1">내 번호 확인하기</div>
         </Link>
         <Link
           href="/my-numbers"
@@ -92,7 +92,7 @@ export default function Home() {
         >
           <div className="text-2xl mb-2">⭐</div>
           <div className="font-medium text-gray-900">내 번호</div>
-          <div className="text-xs text-gray-500 mt-1">저장된 번호 관리</div>
+          <div className="text-sm text-gray-500 mt-1">저장된 번호 관리</div>
         </Link>
       </section>
       {/* [AD PREVIEW] 하단 배너 */}

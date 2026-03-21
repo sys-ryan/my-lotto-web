@@ -31,7 +31,7 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 rounded-lg text-base font-medium transition-colors ${
                     isActive
                       ? 'bg-blue-50 text-blue-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -56,7 +56,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex-1 flex flex-col items-center py-2 text-xs font-medium transition-colors ${
+                className={`flex-1 flex flex-col items-center py-2 text-sm font-medium transition-colors ${
                   isActive ? 'text-blue-600' : 'text-gray-500'
                 }`}
               >
