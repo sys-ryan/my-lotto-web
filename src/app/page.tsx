@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Dices, BarChart3, Trophy, Star } from 'lucide-react';
 import { useGetWinningNumberInfoQuery } from '@/hooks/queries/useGetWinningNumberInfoQuery';
 import LottoNumbers from '@/components/LottoNumbers';
 
@@ -56,7 +57,7 @@ export default function Home() {
           href="/generate/random"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
-          <div className="text-2xl mb-2">🎲</div>
+          <Dices className="w-7 h-7 text-blue-500 mx-auto mb-2" />
           <div className="font-medium text-gray-900">랜덤 생성</div>
           <div className="text-sm text-gray-500 mt-1">행운의 번호 뽑기</div>
         </Link>
@@ -64,7 +65,7 @@ export default function Home() {
           href="/generate/appearance"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
-          <div className="text-2xl mb-2">📊</div>
+          <BarChart3 className="w-7 h-7 text-green-500 mx-auto mb-2" />
           <div className="font-medium text-gray-900">출현 빈도</div>
           <div className="text-sm text-gray-500 mt-1">통계 기반 생성</div>
         </Link>
@@ -72,7 +73,7 @@ export default function Home() {
           href="/winning-numbers/check"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
-          <div className="text-2xl mb-2">🏆</div>
+          <Trophy className="w-7 h-7 text-yellow-500 mx-auto mb-2" />
           <div className="font-medium text-gray-900">당첨 확인</div>
           <div className="text-sm text-gray-500 mt-1">내 번호 확인하기</div>
         </Link>
@@ -80,7 +81,7 @@ export default function Home() {
           href="/my-numbers"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
-          <div className="text-2xl mb-2">⭐</div>
+          <Star className="w-7 h-7 text-purple-500 mx-auto mb-2" />
           <div className="font-medium text-gray-900">내 번호</div>
           <div className="text-sm text-gray-500 mt-1">저장된 번호 관리</div>
         </Link>

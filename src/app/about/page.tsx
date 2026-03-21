@@ -56,14 +56,6 @@ export default function AboutPage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-bold text-gray-900">기술 스택</h2>
-          <p>
-            Next.js, React, TypeScript, Tailwind CSS 기반으로 개발되었으며,
-            빠르고 쾌적한 사용 경험을 제공합니다.
-          </p>
-        </section>
-
-        <section className="space-y-2">
           <h2 className="text-lg font-bold text-gray-900">면책 사항</h2>
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
             <p className="text-yellow-800">

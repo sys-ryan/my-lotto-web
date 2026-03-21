@@ -1,29 +1,35 @@
 import Link from 'next/link';
+import { Dices, BarChart3, TrendingUp, Search } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
-const methods = [
+const methods: { href: string; title: string; description: string; icon: LucideIcon; color: string }[] = [
   {
     href: '/generate/random',
     title: '랜덤 생성',
     description: '완전 랜덤으로 번호를 생성합니다',
-    icon: '🎲',
+    icon: Dices,
+    color: 'text-blue-500',
   },
   {
     href: '/generate/appearance',
     title: '출현 빈도 기반',
     description: '과거 당첨번호 출현 빈도를 분석하여 생성합니다',
-    icon: '📊',
+    icon: BarChart3,
+    color: 'text-green-500',
   },
   {
     href: '/generate/range',
     title: '구간별 생성',
     description: '번호 구간(1~10, 11~20 등)별 통계 기반 생성',
-    icon: '📈',
+    icon: TrendingUp,
+    color: 'text-orange-500',
   },
   {
     href: '/generate/overdue',
     title: '미출현 기반',
     description: '오랫동안 나오지 않은 번호 위주로 생성합니다',
-    icon: '🔍',
+    icon: Search,
+    color: 'text-purple-500',
   },
 ];
 
@@ -38,7 +44,7 @@ export default function GeneratePage() {
             href={m.href}
             className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
           >
-            <div className="text-3xl">{m.icon}</div>
+            <m.icon className={`w-8 h-8 ${m.color}`} />
             <div>
               <div className="font-bold text-gray-900">{m.title}</div>
               <div className="text-sm text-gray-500 mt-0.5">{m.description}</div>

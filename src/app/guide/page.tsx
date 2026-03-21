@@ -6,6 +6,8 @@ export default function GuidePage() {
       <h1 className="text-2xl font-bold text-gray-900">로또 가이드</h1>
 
       <div className="bg-white rounded-2xl shadow-sm p-6 space-y-6 text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-500">기준일: 2026년 3월</p>
+
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-gray-900">로또 6/45 당첨 확률</h2>
           <p>

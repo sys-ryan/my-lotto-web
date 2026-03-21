@@ -19,10 +19,10 @@ export default function ContactPage() {
         <div className="bg-gray-50 rounded-xl p-6 text-center">
           <p className="text-sm text-gray-500 mb-2">이메일</p>
           <a
-            href="mailto:ryankim.codingbear@gmail.com"
+            href="mailto:codingbearkr@gmail.com"
             className="text-lg font-medium text-blue-600 hover:underline"
           >
-            ryankim.codingbear@gmail.com
+            codingbearkr@gmail.com
           </a>
         </div>
 

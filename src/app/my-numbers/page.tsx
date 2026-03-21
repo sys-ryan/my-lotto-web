@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ClipboardList } from 'lucide-react';
 import useMyLottoNumbersStore from '@/store/myLottoNumbersStore';
 import LottoNumbers from '@/components/LottoNumbers';
 
@@ -87,7 +88,7 @@ export default function MyNumbersPage() {
 
       {myLottoNumbers.length === 0 ? (
         <div className="bg-white rounded-2xl shadow-sm p-12 text-center">
-          <div className="text-4xl mb-4">📝</div>
+          <ClipboardList className="w-10 h-10 text-gray-400 mx-auto mb-4" />
           <p className="text-gray-500 mb-4">저장된 번호가 없습니다</p>
           <Link
             href="/my-numbers/add"

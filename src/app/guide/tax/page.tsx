@@ -11,6 +11,8 @@ export default function TaxGuidePage() {
       <h1 className="text-2xl font-bold text-gray-900">당첨금 세금 안내</h1>
 
       <div className="bg-white rounded-2xl shadow-sm p-6 space-y-6 text-gray-700 leading-relaxed">
+        <p className="text-sm text-gray-500">기준일: 2026년 3월 (2023년 소득세법 개정 반영)</p>
+
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-gray-900">복권 당첨금 과세 기준</h2>
           <p>

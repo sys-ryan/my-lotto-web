@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PenLine, Dices } from 'lucide-react';
 
 export default function AddNumberPage() {
   return (
@@ -10,7 +11,7 @@ export default function AddNumberPage() {
           href="/my-numbers/add/manual"
           className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
         >
-          <div className="text-3xl">✏️</div>
+          <PenLine className="w-8 h-8 text-gray-500" />
           <div>
             <div className="font-bold text-gray-900">직접 입력</div>
             <div className="text-sm text-gray-500 mt-0.5">6개 숫자를 직접 입력합니다</div>
@@ -21,7 +22,7 @@ export default function AddNumberPage() {
           href="/generate"
           className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-shadow"
         >
-          <div className="text-3xl">🎲</div>
+          <Dices className="w-8 h-8 text-blue-500" />
           <div>
             <div className="font-bold text-gray-900">번호 생성</div>
             <div className="text-sm text-gray-500 mt-0.5">다양한 방법으로 번호를 생성합니다</div>
