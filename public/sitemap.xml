@@ -46,6 +46,41 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://mylotto.codingbear.dev/guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/guide/tax</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/guide/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/privacy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://mylotto.codingbear.dev/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://mylotto.codingbear.dev/settings</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>

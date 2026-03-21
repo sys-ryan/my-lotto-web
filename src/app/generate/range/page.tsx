@@ -192,10 +192,6 @@ export default function RangeGeneratePage() {
         </div>
       )}
 
-      {/* [AD PREVIEW] 번호생성 결과 하단 배너 */}
-      <div className="bg-red-200 border-2 border-red-400 border-dashed rounded-2xl p-4 text-center text-red-700 font-medium text-sm">
-        광고 영역 - 생성 결과 하단 (320x250)
-      </div>
     </div>
   );
 }
