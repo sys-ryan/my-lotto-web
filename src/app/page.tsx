@@ -15,6 +15,11 @@ export default function Home() {
         <p className="text-gray-500">로또 당첨번호 확인 & 번호 생성</p>
       </section>
 
+      {/* [AD PREVIEW] 상단 배너 */}
+      <div className="bg-blue-200 border-2 border-blue-400 border-dashed rounded-2xl p-4 text-center text-blue-700 font-medium text-sm">
+        광고 영역 - 상단 배너 (320x100)
+      </div>
+
       {/* Latest winning numbers */}
       <section className="bg-white rounded-2xl shadow-sm p-6">
         <div className="flex items-center justify-between mb-4">
@@ -49,6 +54,11 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* [AD PREVIEW] 중간 배너 */}
+      <div className="bg-green-200 border-2 border-green-400 border-dashed rounded-2xl p-4 text-center text-green-700 font-medium text-sm">
+        광고 영역 - 중간 배너 (320x100)
+      </div>
 
       {/* Quick actions */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -85,6 +95,10 @@ export default function Home() {
           <div className="text-xs text-gray-500 mt-1">저장된 번호 관리</div>
         </Link>
       </section>
+      {/* [AD PREVIEW] 하단 배너 */}
+      <div className="bg-orange-200 border-2 border-orange-400 border-dashed rounded-2xl p-4 text-center text-orange-700 font-medium text-sm">
+        광고 영역 - 하단 배너 (320x250)
+      </div>
     </div>
   );
 }
