@@ -41,7 +41,7 @@ export default function Home() {
             />
           </div>
         ) : (
-          <p className="text-gray-400">데이터를 불러올 수 없습니다</p>
+          <p className="text-gray-500">데이터를 불러올 수 없습니다</p>
         )}
       </section>
 
