@@ -53,15 +53,9 @@ export default function OverdueGeneratePage() {
     alert('저장되었습니다!');
   };
 
-  const sortedStats = statsQuery.data?.data
-    ? [...statsQuery.data.data].sort((a, b) => b.overdueDays - a.overdueDays)
+  const overdueNumbers = statsQuery.data?.data
+    ? [...statsQuery.data.data].sort((a, b) => a - b)
     : [];
-
-  const getOverdueColor = (days: number) => {
-    if (days >= 60) return 'text-red-600 font-bold';
-    if (days >= 30) return 'text-orange-500 font-medium';
-    return 'text-gray-500';
-  };
 
   return (
     <div className="space-y-6">
@@ -90,30 +84,19 @@ export default function OverdueGeneratePage() {
         {statsQuery.isLoading && (
           <div className="text-center text-gray-400 py-4">미출현 데이터 로딩 중...</div>
         )}
-        {sortedStats.length > 0 && (
+        {overdueNumbers.length > 0 && (
           <div>
             <label className="block text-base font-medium text-gray-700 mb-2">
-              미출현 번호 ({sortedStats.length}개)
+              미출현 번호 ({overdueNumbers.length}개)
             </label>
-            <div className="grid grid-cols-6 sm:grid-cols-9 gap-2">
-              {sortedStats.map((stat) => (
-                <div key={stat.number} className="flex flex-col items-center gap-1">
-                  <NumberBall number={stat.number} size="sm" />
-                  <span className={`text-xs ${getOverdueColor(stat.overdueDays)}`}>
-                    {stat.overdueDays}일
-                  </span>
-                </div>
+            <div className="flex flex-wrap gap-2">
+              {overdueNumbers.map((num) => (
+                <NumberBall key={num} number={num} size="md" />
               ))}
             </div>
-            {sortedStats.some((s) => s.overdueDays >= 60) && (
-              <div className="flex items-center gap-4 mt-3 text-xs text-gray-400">
-                <span><span className="text-red-600 font-bold">60일+</span> 매우 오래됨</span>
-                <span><span className="text-orange-500 font-medium">30일+</span> 오래됨</span>
-              </div>
-            )}
           </div>
         )}
-        {statsQuery.data && sortedStats.length === 0 && (
+        {statsQuery.data && overdueNumbers.length === 0 && (
           <div className="text-center text-gray-400 py-4">해당 기간에 미출현 번호가 없습니다</div>
         )}
 

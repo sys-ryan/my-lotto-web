@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Dices, BarChart3, Trophy, Star } from 'lucide-react';
+import { Dices, BarChart3, TrendingUp, Search, Trophy, Star } from 'lucide-react';
 import { useGetWinningNumberInfoQuery } from '@/hooks/queries/useGetWinningNumberInfoQuery';
 import LottoNumbers from '@/components/LottoNumbers';
 
@@ -52,7 +52,7 @@ export default function Home() {
       </section>
 
       {/* Quick actions */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <Link
           href="/generate/random"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
@@ -70,6 +70,22 @@ export default function Home() {
           <div className="text-sm text-gray-500 mt-1">통계 기반 생성</div>
         </Link>
         <Link
+          href="/generate/range"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <TrendingUp className="w-7 h-7 text-orange-500 mx-auto mb-2" />
+          <div className="font-medium text-gray-900">구간별 생성</div>
+          <div className="text-sm text-gray-500 mt-1">구간 통계 기반</div>
+        </Link>
+        <Link
+          href="/generate/overdue"
+          className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
+        >
+          <Search className="w-7 h-7 text-purple-500 mx-auto mb-2" />
+          <div className="font-medium text-gray-900">미출현 기반</div>
+          <div className="text-sm text-gray-500 mt-1">안 나온 번호 위주</div>
+        </Link>
+        <Link
           href="/winning-numbers/check"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
@@ -81,7 +97,7 @@ export default function Home() {
           href="/my-numbers"
           className="bg-white rounded-2xl shadow-sm p-5 text-center hover:shadow-md transition-shadow"
         >
-          <Star className="w-7 h-7 text-purple-500 mx-auto mb-2" />
+          <Star className="w-7 h-7 text-amber-500 mx-auto mb-2" />
           <div className="font-medium text-gray-900">내 번호</div>
           <div className="text-sm text-gray-500 mt-1">저장된 번호 관리</div>
         </Link>

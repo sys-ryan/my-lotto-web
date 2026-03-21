@@ -61,15 +61,20 @@ export interface GetNumbersByRangeStatisticsRequest {
   includeBonusNumber: boolean;
 }
 
-export interface RangeStatistics {
-  range: string;
-  count: number;
-  numbers: number[];
+export interface RangeStatisticsData {
+  range1NumberCount: number;
+  range2NumberCount: number;
+  range3NumberCount: number;
+  range4NumberCount: number;
+  range5NumberCount: number;
+  totalNumberCount: number;
+  startDate: string;
+  endDate: string;
 }
 
 export interface GetNumbersByRangeStatisticsResponse {
   success: boolean;
-  data: RangeStatistics[];
+  data: RangeStatisticsData;
   message: string;
   timestamp: string;
 }
@@ -97,7 +102,7 @@ export interface GetNumbersByOverdueStatisticsRequest {
 
 export interface GetNumbersByOverdueStatisticsResponse {
   success: boolean;
-  data: { number: number; overdueDays: number }[];
+  data: number[];
   message: string;
   timestamp: string;
 }

@@ -5,11 +5,15 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { getNumbersByRangeStatistics, postNumbersByRangeGeneration } from '@/api/lotto';
 import { getDateRange, DATE_RANGE_OPTIONS } from '@/util/date';
 import LottoNumbers from '@/components/LottoNumbers';
-import NumberBall from '@/components/NumberBall';
 import useMyLottoNumbersStore from '@/store/myLottoNumbersStore';
 import { v4 } from '@/util/uuid';
+import type { RangeStatisticsData } from '@/types/lotto';
 
 const RANGES = ['1-10', '11-20', '21-30', '31-40', '41-45'];
+const RANGE_KEYS: (keyof RangeStatisticsData)[] = [
+  'range1NumberCount', 'range2NumberCount', 'range3NumberCount',
+  'range4NumberCount', 'range5NumberCount',
+];
 const SELECTION_METHODS = [
   { value: 'RANDOM' as const, label: '랜덤' },
   { value: 'WEIGHTED_BY_FREQUENCY' as const, label: '빈도 가중' },
@@ -42,18 +46,23 @@ export default function RangeGeneratePage() {
 
   const totalCount = Object.values(rangeCounts).reduce((a, b) => a + b, 0);
 
-  const handleAutoDistribute = () => {
-    if (!statsQuery.data?.data) return;
-    const stats = statsQuery.data.data;
-    const totalAppearances = stats.reduce((sum, s) => sum + s.count, 0);
-    if (totalAppearances === 0) return;
+  const getRangeCount = (index: number): number => {
+    const data = statsQuery.data?.data;
+    if (!data) return 0;
+    return data[RANGE_KEYS[index]] as number;
+  };
 
-    // Calculate proportional distribution, total must be 6
-    const rawCounts = stats.map((s) => (s.count / totalAppearances) * 6);
+  const handleAutoDistribute = () => {
+    const data = statsQuery.data?.data;
+    if (!data) return;
+    const total = data.totalNumberCount;
+    if (total === 0) return;
+
+    const counts = RANGE_KEYS.map((key) => data[key] as number);
+    const rawCounts = counts.map((c) => (c / total) * 6);
     const floored = rawCounts.map((c) => Math.floor(c));
     let remaining = 6 - floored.reduce((a, b) => a + b, 0);
 
-    // Distribute remaining by largest fractional parts
     const fractions = rawCounts.map((c, i) => ({ i, frac: c - floored[i] }));
     fractions.sort((a, b) => b.frac - a.frac);
     for (const f of fractions) {
@@ -63,8 +72,8 @@ export default function RangeGeneratePage() {
     }
 
     const newCounts: Record<string, number> = {};
-    stats.forEach((s, i) => {
-      newCounts[s.range] = floored[i];
+    RANGES.forEach((range, i) => {
+      newCounts[range] = floored[i];
     });
     setRangeCounts(newCounts);
   };
@@ -130,22 +139,19 @@ export default function RangeGeneratePage() {
         {statsQuery.data?.data && (
           <div>
             <label className="block text-base font-medium text-gray-700 mb-2">구간별 출현 통계</label>
-            <div className="space-y-3">
-              {statsQuery.data.data.map((stat) => (
-                <div key={stat.range} className="bg-gray-50 rounded-xl p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-gray-900">{stat.range}</span>
-                    <span className="text-sm text-gray-500">{stat.count}회 출현</span>
+            <div className="grid grid-cols-5 gap-2">
+              {RANGES.map((range, i) => {
+                const count = getRangeCount(i);
+                const total = statsQuery.data!.data.totalNumberCount;
+                const pct = total > 0 ? ((count / total) * 100).toFixed(1) : '0';
+                return (
+                  <div key={range} className="bg-gray-50 rounded-xl p-3 text-center">
+                    <div className="font-medium text-gray-900 text-sm">{range}</div>
+                    <div className="text-lg font-bold text-blue-600">{count}</div>
+                    <div className="text-xs text-gray-400">{pct}%</div>
                   </div>
-                  {stat.numbers && stat.numbers.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {stat.numbers.sort((a, b) => a - b).map((num) => (
-                        <NumberBall key={num} number={num} size="sm" />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
