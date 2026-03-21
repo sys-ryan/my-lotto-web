@@ -47,6 +47,11 @@ export default function WinningNumbersPage() {
       ) : (
         <DH720Tab data={dh720.data} isLoading={dh720.isLoading} />
       )}
+
+      {/* [AD PREVIEW] 당첨번호 하단 배너 */}
+      <div className="bg-purple-200 border-2 border-purple-400 border-dashed rounded-2xl p-4 text-center text-purple-700 font-medium text-sm">
+        광고 영역 - 당첨번호 하단 배너 (320x250)
+      </div>
     </div>
   );
 }
