@@ -1,36 +1,36 @@
 export const getDateRange = (option: string): { startDate: string; endDate: string } => {
   const now = new Date();
-  const endDate = now.toISOString().split('T')[0];
+  const endDate = now.toISOString().split('T')[0] + 'T00:00:00Z';
   let startDate: string;
 
   switch (option) {
     case '3months': {
       const d = new Date(now);
       d.setMonth(d.getMonth() - 3);
-      startDate = d.toISOString().split('T')[0];
+      startDate = d.toISOString().split('T')[0] + 'T00:00:00Z';
       break;
     }
     case '6months': {
       const d = new Date(now);
       d.setMonth(d.getMonth() - 6);
-      startDate = d.toISOString().split('T')[0];
+      startDate = d.toISOString().split('T')[0] + 'T00:00:00Z';
       break;
     }
     case '12months': {
       const d = new Date(now);
       d.setFullYear(d.getFullYear() - 1);
-      startDate = d.toISOString().split('T')[0];
+      startDate = d.toISOString().split('T')[0] + 'T00:00:00Z';
       break;
     }
     case '36months': {
       const d = new Date(now);
       d.setFullYear(d.getFullYear() - 3);
-      startDate = d.toISOString().split('T')[0];
+      startDate = d.toISOString().split('T')[0] + 'T00:00:00Z';
       break;
     }
     case 'all':
     default:
-      startDate = '2002-12-07';
+      startDate = '2002-12-07T00:00:00Z';
       break;
   }
 

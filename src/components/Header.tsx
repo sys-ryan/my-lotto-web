@@ -56,7 +56,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex-1 flex flex-col items-center py-2 text-sm font-medium transition-colors ${
+                className={`flex-1 flex flex-col items-center py-4 text-sm font-medium transition-colors ${
                   isActive ? 'text-blue-600' : 'text-gray-500'
                 }`}
               >
