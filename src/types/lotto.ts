@@ -14,10 +14,12 @@ export interface LottoData {
 }
 
 export interface LottoResult {
-  rank: number;
-  totalWinnerCount: number;
-  totalPrizeAmount: number;
-  perPersonPrizeAmount: number;
+  rank: string;
+  totalPrize: string;
+  winningGames: string;
+  prizePerGame: string;
+  criteria: string;
+  notes: string;
 }
 
 export interface DH720LottoResponse {

@@ -86,19 +86,19 @@ function Lotto645Tab({
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left font-medium text-gray-600">등수</th>
-                <th className="px-4 py-3 text-right font-medium text-gray-600">당첨금</th>
-                <th className="px-4 py-3 text-right font-medium text-gray-600">당첨자 수</th>
+                <th className="px-4 py-3 text-right font-medium text-gray-600">1인 당첨금</th>
+                <th className="px-4 py-3 text-right font-medium text-gray-600">당첨 게임 수</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {result.map((r) => (
                 <tr key={r.rank}>
-                  <td className="px-4 py-3 font-medium text-gray-900">{r.rank}등</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">{r.rank}</td>
                   <td className="px-4 py-3 text-right text-gray-700">
-                    {formatKRW(r.perPersonPrizeAmount)}
+                    {r.prizePerGame}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-700">
-                    {r.totalWinnerCount.toLocaleString()}명
+                    {r.winningGames}게임
                   </td>
                 </tr>
               ))}
