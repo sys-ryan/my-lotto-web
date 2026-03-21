@@ -10,7 +10,7 @@ import { v4 } from '@/util/uuid';
 
 export default function AppearanceGeneratePage() {
   const [dateRange, setDateRange] = useState('all');
-  const [highFreqWeight, setHighFreqWeight] = useState(70);
+  const [highFreqWeight, setHighFreqWeight] = useState(50);
   const [lowFreqRatio, setLowFreqRatio] = useState(30);
   const [includeBonusNumber, setIncludeBonusNumber] = useState(false);
   const [results, setResults] = useState<number[][]>([]);
@@ -55,7 +55,7 @@ export default function AppearanceGeneratePage() {
       <div className="bg-white rounded-2xl shadow-sm p-6 space-y-5">
         {/* Date range */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">분석 기간</label>
+          <label className="block text-base font-medium text-gray-700 mb-2">분석 기간</label>
           <div className="flex flex-wrap gap-2">
             {DATE_RANGE_OPTIONS.map((opt) => (
               <button
@@ -75,7 +75,7 @@ export default function AppearanceGeneratePage() {
 
         {/* High frequency weight */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-base font-medium text-gray-700 mb-2">
             고빈도 번호 가중치: {highFreqWeight}%
           </label>
           <input
@@ -83,13 +83,32 @@ export default function AppearanceGeneratePage() {
             min={0}
             max={100}
             value={highFreqWeight}
-            onChange={(e) => {
-              const val = parseInt(e.target.value);
-              setHighFreqWeight(val);
-              setLowFreqRatio(100 - val);
-            }}
+            onChange={(e) => setHighFreqWeight(parseInt(e.target.value))}
             className="w-full"
           />
+          <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <span>낮음</span>
+            <span>높음</span>
+          </div>
+        </div>
+
+        {/* Low frequency ratio */}
+        <div>
+          <label className="block text-base font-medium text-gray-700 mb-2">
+            저빈도 번호 반영 비율: {lowFreqRatio}%
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={lowFreqRatio}
+            onChange={(e) => setLowFreqRatio(parseInt(e.target.value))}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <span>낮음</span>
+            <span>높음</span>
+          </div>
         </div>
 
         {/* Include bonus */}
@@ -102,6 +121,15 @@ export default function AppearanceGeneratePage() {
           />
           <span className="text-sm text-gray-700">보너스 번호 포함</span>
         </label>
+
+        {/* Formula preview */}
+        <div className="bg-gray-50 rounded-xl p-4">
+          <p className="text-sm text-gray-500 mb-2">적용될 계산식 미리보기</p>
+          <p className="font-medium text-gray-900">번호 선택 확률 =</p>
+          <p className="font-medium text-gray-900 ml-6 mt-1">
+            (출현 빈도 x {(highFreqWeight / 100).toFixed(2)}) + (미출현 기간 x {(lowFreqRatio / 100).toFixed(2)})
+          </p>
+        </div>
 
         <button
           onClick={handleGenerate}
@@ -118,7 +146,7 @@ export default function AppearanceGeneratePage() {
             <h2 className="font-bold text-gray-900">생성 결과</h2>
             <button
               onClick={saveNumbers}
-              className="text-sm text-blue-600 font-medium hover:text-blue-700"
+              className="text-base text-blue-600 font-medium hover:text-blue-700"
             >
               저장하기
             </button>
@@ -126,14 +154,13 @@ export default function AppearanceGeneratePage() {
           <div className="space-y-3">
             {results.map((nums, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-sm text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
+                <span className="text-base text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
                 <LottoNumbers numbers={nums} />
               </div>
             ))}
           </div>
         </div>
       )}
-
     </div>
   );
 }

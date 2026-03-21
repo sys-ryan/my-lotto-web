@@ -5,6 +5,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { getNumbersByRangeStatistics, postNumbersByRangeGeneration } from '@/api/lotto';
 import { getDateRange, DATE_RANGE_OPTIONS } from '@/util/date';
 import LottoNumbers from '@/components/LottoNumbers';
+import NumberBall from '@/components/NumberBall';
 import useMyLottoNumbersStore from '@/store/myLottoNumbersStore';
 import { v4 } from '@/util/uuid';
 
@@ -40,6 +41,33 @@ export default function RangeGeneratePage() {
   });
 
   const totalCount = Object.values(rangeCounts).reduce((a, b) => a + b, 0);
+
+  const handleAutoDistribute = () => {
+    if (!statsQuery.data?.data) return;
+    const stats = statsQuery.data.data;
+    const totalAppearances = stats.reduce((sum, s) => sum + s.count, 0);
+    if (totalAppearances === 0) return;
+
+    // Calculate proportional distribution, total must be 6
+    const rawCounts = stats.map((s) => (s.count / totalAppearances) * 6);
+    const floored = rawCounts.map((c) => Math.floor(c));
+    let remaining = 6 - floored.reduce((a, b) => a + b, 0);
+
+    // Distribute remaining by largest fractional parts
+    const fractions = rawCounts.map((c, i) => ({ i, frac: c - floored[i] }));
+    fractions.sort((a, b) => b.frac - a.frac);
+    for (const f of fractions) {
+      if (remaining <= 0) break;
+      floored[f.i]++;
+      remaining--;
+    }
+
+    const newCounts: Record<string, number> = {};
+    stats.forEach((s, i) => {
+      newCounts[s.range] = floored[i];
+    });
+    setRangeCounts(newCounts);
+  };
 
   const handleGenerate = () => {
     if (totalCount !== 6) {
@@ -79,7 +107,7 @@ export default function RangeGeneratePage() {
       <div className="bg-white rounded-2xl shadow-sm p-6 space-y-5">
         {/* Date range */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">분석 기간</label>
+          <label className="block text-base font-medium text-gray-700 mb-2">분석 기간</label>
           <div className="flex flex-wrap gap-2">
             {DATE_RANGE_OPTIONS.map((opt) => (
               <button
@@ -96,14 +124,26 @@ export default function RangeGeneratePage() {
         </div>
 
         {/* Statistics */}
+        {statsQuery.isLoading && (
+          <div className="text-center text-gray-400 py-4">통계 데이터 로딩 중...</div>
+        )}
         {statsQuery.data?.data && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">구간별 출현 통계</label>
-            <div className="grid grid-cols-5 gap-2 text-center text-xs">
+            <label className="block text-base font-medium text-gray-700 mb-2">구간별 출현 통계</label>
+            <div className="space-y-3">
               {statsQuery.data.data.map((stat) => (
-                <div key={stat.range} className="bg-gray-50 rounded-lg p-2">
-                  <div className="font-medium text-gray-900">{stat.range}</div>
-                  <div className="text-gray-500">{stat.count}회</div>
+                <div key={stat.range} className="bg-gray-50 rounded-xl p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-medium text-gray-900">{stat.range}</span>
+                    <span className="text-sm text-gray-500">{stat.count}회 출현</span>
+                  </div>
+                  {stat.numbers && stat.numbers.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {stat.numbers.sort((a, b) => a - b).map((num) => (
+                        <NumberBall key={num} number={num} size="sm" />
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -112,9 +152,18 @@ export default function RangeGeneratePage() {
 
         {/* Range counts */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            구간별 개수 (합계: {totalCount}/6)
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-base font-medium text-gray-700">
+              구간별 개수 (합계: {totalCount}/6)
+            </label>
+            <button
+              onClick={handleAutoDistribute}
+              disabled={!statsQuery.data?.data}
+              className="text-sm text-blue-600 font-medium hover:text-blue-700 disabled:text-gray-400"
+            >
+              자동 분포
+            </button>
+          </div>
           <div className="space-y-2">
             {RANGES.map((range) => (
               <div key={range} className="flex items-center gap-3">
@@ -137,7 +186,7 @@ export default function RangeGeneratePage() {
 
         {/* Selection method */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">선택 방법</label>
+          <label className="block text-base font-medium text-gray-700 mb-2">선택 방법</label>
           <div className="flex flex-wrap gap-2">
             {SELECTION_METHODS.map((m) => (
               <button
@@ -177,21 +226,20 @@ export default function RangeGeneratePage() {
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-gray-900">생성 결과</h2>
-            <button onClick={saveNumbers} className="text-sm text-blue-600 font-medium hover:text-blue-700">
+            <button onClick={saveNumbers} className="text-base text-blue-600 font-medium hover:text-blue-700">
               저장하기
             </button>
           </div>
           <div className="space-y-3">
             {results.map((nums, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-sm text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
+                <span className="text-base text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
                 <LottoNumbers numbers={[...nums].sort((a, b) => a - b)} />
               </div>
             ))}
           </div>
         </div>
       )}
-
     </div>
   );
 }

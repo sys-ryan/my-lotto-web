@@ -5,6 +5,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { getNumbersByOverdueStatistics, postNumbersByOverdueGeneration } from '@/api/lotto';
 import { getDateRange, DATE_RANGE_OPTIONS } from '@/util/date';
 import LottoNumbers from '@/components/LottoNumbers';
+import NumberBall from '@/components/NumberBall';
 import useMyLottoNumbersStore from '@/store/myLottoNumbersStore';
 import { v4 } from '@/util/uuid';
 
@@ -52,6 +53,16 @@ export default function OverdueGeneratePage() {
     alert('저장되었습니다!');
   };
 
+  const sortedStats = statsQuery.data?.data
+    ? [...statsQuery.data.data].sort((a, b) => b.overdueDays - a.overdueDays)
+    : [];
+
+  const getOverdueColor = (days: number) => {
+    if (days >= 60) return 'text-red-600 font-bold';
+    if (days >= 30) return 'text-orange-500 font-medium';
+    return 'text-gray-500';
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">미출현 기반 생성</h1>
@@ -59,7 +70,7 @@ export default function OverdueGeneratePage() {
       <div className="bg-white rounded-2xl shadow-sm p-6 space-y-5">
         {/* Date range */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">분석 기간</label>
+          <label className="block text-base font-medium text-gray-700 mb-2">분석 기간</label>
           <div className="flex flex-wrap gap-2">
             {DATE_RANGE_OPTIONS.map((opt) => (
               <button
@@ -76,26 +87,39 @@ export default function OverdueGeneratePage() {
         </div>
 
         {/* Statistics */}
-        {statsQuery.data?.data && (
+        {statsQuery.isLoading && (
+          <div className="text-center text-gray-400 py-4">미출현 데이터 로딩 중...</div>
+        )}
+        {sortedStats.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">미출현 기간 (일)</label>
-            <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 text-xs">
-              {statsQuery.data.data
-                .sort((a, b) => b.overdueDays - a.overdueDays)
-                .slice(0, 18)
-                .map((stat) => (
-                  <div key={stat.number} className="bg-gray-50 rounded-lg p-1.5 text-center">
-                    <div className="font-bold text-gray-900">{stat.number}</div>
-                    <div className="text-gray-400">{stat.overdueDays}일</div>
-                  </div>
-                ))}
+            <label className="block text-base font-medium text-gray-700 mb-2">
+              미출현 번호 ({sortedStats.length}개)
+            </label>
+            <div className="grid grid-cols-6 sm:grid-cols-9 gap-2">
+              {sortedStats.map((stat) => (
+                <div key={stat.number} className="flex flex-col items-center gap-1">
+                  <NumberBall number={stat.number} size="sm" />
+                  <span className={`text-xs ${getOverdueColor(stat.overdueDays)}`}>
+                    {stat.overdueDays}일
+                  </span>
+                </div>
+              ))}
             </div>
+            {sortedStats.some((s) => s.overdueDays >= 60) && (
+              <div className="flex items-center gap-4 mt-3 text-xs text-gray-400">
+                <span><span className="text-red-600 font-bold">60일+</span> 매우 오래됨</span>
+                <span><span className="text-orange-500 font-medium">30일+</span> 오래됨</span>
+              </div>
+            )}
           </div>
+        )}
+        {statsQuery.data && sortedStats.length === 0 && (
+          <div className="text-center text-gray-400 py-4">해당 기간에 미출현 번호가 없습니다</div>
         )}
 
         {/* Overdue count */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-base font-medium text-gray-700 mb-2">
             미출현 번호 포함 개수: {overdueCount}
           </label>
           <input
@@ -136,21 +160,20 @@ export default function OverdueGeneratePage() {
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-gray-900">생성 결과</h2>
-            <button onClick={saveNumbers} className="text-sm text-blue-600 font-medium hover:text-blue-700">
+            <button onClick={saveNumbers} className="text-base text-blue-600 font-medium hover:text-blue-700">
               저장하기
             </button>
           </div>
           <div className="space-y-3">
             {results.map((nums, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-sm text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
+                <span className="text-base text-gray-400 w-6">{String.fromCharCode(65 + i)}</span>
                 <LottoNumbers numbers={nums} />
               </div>
             ))}
           </div>
         </div>
       )}
-
     </div>
   );
 }
